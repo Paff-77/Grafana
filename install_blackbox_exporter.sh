@@ -73,3 +73,4 @@ systemctl enable blackbox_exporter
 
 # Start the blackbox_exporter service
 systemctl start blackbox_exporter
+systemctl status blackbox_exporter
