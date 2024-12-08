@@ -1,0 +1,189 @@
+# my global config
+global:
+  scrape_interval: 5s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+           - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+   - "./rules/alert_rule.yml"
+  # - "second_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: "Prometheus"
+    static_configs:
+      - targets: ["prometheus:9090"]
+
+  - job_name: "Cadvisor-SGP-Huawei"
+    static_configs:
+      - targets: ["cadvisor:8080"]
+        labels:
+          instance: SGP-Huawei
+
+  - job_name: "Cadvisor-VIE-NetCup"
+    static_configs:
+      - targets: ["152.53.3.143:8088"]
+        labels:
+          instance: VIE-NetCup
+
+  - job_name: "node_exporter"
+    scrape_interval: 3s
+    static_configs:
+      - targets: ["157.254.33.148:9100"]
+        labels:
+          instance: 'HKG-Sharon'
+      - targets: ["156.255.90.23:9100"]
+        labels:
+          instance: 'HKG-Diylink'
+      - targets: ["166.88.90.221:9100"]
+        labels:
+          instance: 'LAX-Evoxt'
+      - targets: ["142.171.108.159:9100"]
+        labels:
+          instance: 'LAX-RackNerd'
+      - targets: ["185.218.6.63:9100"]
+        labels:
+          instance: 'SJC-SaltyFish'
+      - targets: ["13.71.155.232:9100"]
+        labels:
+          instance: 'TYO-Azure'
+      - targets: ["160.191.40.252:9100"]
+        labels:
+          instance: 'TYO-BackWaves'
+      - targets: ["node-exporter:9100"]
+        labels:
+          instance: 'SGP-Huawei'
+      - targets: ["104.215.251.194:9100"]
+        labels:
+          instance: 'SGP-Azure'
+      - targets: ["152.53.3.143:9100"]
+        labels:
+          instance: 'VIE-NetCup-1'
+      - targets: ["152.53.51.168:9100"]
+        labels:
+          instance: 'VIE-NetCup-2'
+      - targets: ["renet.7li.pw:11102"]
+        labels:
+          instance: 'TPE-HiNet'
+
+  - job_name: "HKG-Sharon"
+    metrics_path: /probe
+    scrape_interval: 5s
+    params:
+      module: [icmp]
+    file_sd_configs:
+      - files:
+        - 'services/icmp_test1.json'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - target_label: __address__
+        replacement: 157.254.33.148:9115
+
+  - job_name: "HKG-Diylink"
+    metrics_path: /probe
+    scrape_interval: 5s
+    params:
+      module: [icmp]
+    file_sd_configs:
+      - files:
+        - 'services/icmp_test1.json'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - target_label: __address__
+        replacement: 156.255.90.23:9115
+
+  - job_name: "TPE-HiNet"
+    metrics_path: /probe
+    scrape_interval: 5s
+    params:
+      module: [icmp]
+    file_sd_configs:
+      - files:
+        - 'services/icmp_test1.json'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - target_label: __address__
+        replacement: renet.7li.pw:11103
+
+  - job_name: "SJC-SaltyFish"
+    metrics_path: /probe
+    scrape_interval: 5s
+    params:
+      module: [icmp]
+    file_sd_configs:
+      - files:
+        - 'services/icmp_test1.json'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - target_label: __address__
+        replacement: 185.218.6.63:9115
+
+  - job_name: "TYO-Azure"
+    metrics_path: /probe
+    scrape_interval: 5s
+    params:
+      module: [icmp]
+    file_sd_configs:
+      - files:
+        - 'services/icmp_test1.json'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - target_label: __address__
+        replacement: 13.71.155.232:9115
+
+  - job_name: "SGP-Huawei"
+    metrics_path: /probe
+    scrape_interval: 5s
+    params:
+      module: [icmp]
+    file_sd_configs:
+      - files:
+        - 'services/icmp_test1.json'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - target_label: __address__
+        replacement: blackbox_exporter:9115
+
+  - job_name: "SGP-Azure"
+    metrics_path: /probe
+    scrape_interval: 5s
+    params:
+      module: [icmp]
+    file_sd_configs:
+      - files:
+        - 'services/icmp_test1.json'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - target_label: __address__
+        replacement: 104.215.251.194:9115
+
+  - job_name: "VIE-NetCup"
+    metrics_path: /probe
+    scrape_interval: 5s
+    params:
+      module: [icmp]
+    file_sd_configs:
+      - files:
+        - 'services/icmp_test1.json'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - target_label: __address__
+        replacement: 152.53.3.143:9115
