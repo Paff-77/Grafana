@@ -17,7 +17,7 @@ source ~/.zshrc
 ```
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
-sed -i 's/^plugins=.*/plugins=(git z autojump sudo zsh-syntax-highlighting zsh-autosuggestions)/'~/.zshrc
+sed -i 's/^plugins=.*/plugins=(git z autojump sudo zsh-syntax-highlighting zsh-autosuggestions)/' ~/.zshrc
 
 source ~/.zshrc
 ```
