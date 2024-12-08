@@ -78,7 +78,7 @@ Restart=on-failure
 ExecStart=/usr/local/bin/alertmanager \\
     --config.file=/etc/alertmanager/alertmanager.yml \\
     --storage.path=/var/lib/alertmanager/ \\
-    --web.external-url=https://status.microcharon.dev/alertmanager/ \\
+    --web.external-url=https://************************************/alertmanager/ \\
     --web.listen-address=localhost:9093 \\
     --web.route-prefix=/
 
