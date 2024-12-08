@@ -1,6 +1,6 @@
 # ZSH
 ```
-sudo apt install zsh git autojunp -y
+sudo apt install zsh git autojump -y
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
