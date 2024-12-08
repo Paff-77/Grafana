@@ -1,0 +1,23 @@
+groups:
+- name: node_exporter_alert_rules
+  rules:
+
+  # Alert for any instance of a specific job when CPU usage is above 80% for more than 5 minutes.
+  - alert: Offline
+    expr: up{job="node_exporter"} == 0
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Server {{ $labels.instance }} Offline Alert"
+      description: "{{ $labels.instance }} was Offline"
+
+  # Alert for any instance of a specific job when CPU usage is above 80% for more than 5 minutes.
+  - alert: HighCPUUsage
+    expr: 100 - (avg by (instance, job) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High CPU usage on {{ $labels.instance }}"
+      description: "{{ $labels.instance }} ({{ $labels.job }}) has CPU usage above 80% (current value: {{ $value }}%)"
